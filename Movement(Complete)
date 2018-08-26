@@ -1,0 +1,201 @@
+#Let me know about the changes you've made so that I don't get confused
+#Add Any Notes(suggestions,ideas,etc) Here(If any ^_^ )
+#1.)
+#2.)
+#3.)
+#4.)
+#5.)
+print("The princess's father summouned you! The bravest known warrior in the entirity of dreamland.He assigns you the job of saving the beautifull princess of your lord(king).Do you have what it takes to resue the princess from the hands of  dark lord? Find out by playing this game")
+print('Note: p stands for princess,h stands for hero(you,the player),W stands for wall and T stands for trap that resets itself even after you\'ve triggerd it once')
+global m
+m='O'
+#First One
+startinglist=[["O" for x in range(5)] for x in range(5)]
+a=startinglist.copy()
+for x in range(5):
+  if x!=2:
+    a[2][x]="W"
+a[0][0]='p'
+a[4][4]='h'
+a[0][1]='W' 
+
+#Second One
+b=a.copy()
+b[0],b[1]=b[1],b[0]
+
+
+
+
+#Third One (This one's a bit different but the solution is pretty straightforward)
+c=[["O" for x in range(5)] for x in range(5)]
+for x in range(1,4):
+    c[1][x]='W'            
+    if x!=2:
+        c[2][x]='W'
+        c[3][x]='W'
+c[2][2]='p'
+c[3][2]='G'  #G is a gate,hero has to get the key first inorder to unloc kthe gate and rescue the princes
+
+c[0][2]='K'
+c[4][2]='h'
+
+#Fourth is a bit different too.
+d=[["O" for x in range(5)] for x in range(5)]
+d[0][1]='M'       #Monster
+for x in range(1,5):
+    d[1][x]='W'
+d[3][2]='W'    
+d[3][3]='S'       #Sword    
+d[4][2]='W'
+d[0][4]='p'
+d[4][0]='h'
+
+
+#Fifth one is a variation of the first one
+e=[["O" for x in range(7)] for x in range(7)]
+e[1][1]='p'
+for x in range(0,7):
+    e[0][x]='W'
+    e[6][x]='W'
+    if x==0 or x==6:
+        for y in range(1,6):
+            e[y][x]='W'        #Lava   Takes 3hp away    HP-->Health Points
+    for x in [2]:
+        for y in range(1,5):
+            e[x][y]='T'
+    for x in [4]:
+        for y in range(2,6):
+            e[x][y]='T'        #Trap? We'll figure out something better if you don't like this term :D (Takes 1hp)away
+e[5][5]='h'
+
+
+
+our_initial_game_list=[a,b,c,d,e]
+
+
+
+#MAIN GAME CODE FROM HERE ONWARDS!
+health=2
+flag1=True
+while flag1:
+    lvl=int(input('What Map do you want to play from 1 to 5?: '))
+    if lvl not in range(1,6):
+        print('No such map exists,Please re-enter an appropriate number between 1 to 5')
+    else:
+        lvl-=1
+        flag1=False
+        gmap=our_initial_game_list[lvl][:]
+        print(gmap)
+print(('Your remaining health is {}').format(health))        
+#Movement
+for y in range(len(gmap)):
+    for x in range(len(gmap)):
+        if gmap[y][x]=='h':
+            hxc=x                                        #Hero X Coordinate
+            hyc=y                                        #Hero Y Coordinate
+print(hxc,hyc)
+flag2=True
+while flag2:
+    movement=input('Press \'W\' key to move up \'S\' key to move down \'A\' key to move left and \'D\' key to move right,and tap the enter key: ')
+    if movement=='w':
+        if gmap[hyc-1][hxc]=='W':
+            print('A gigantic wall blocks stands erect where you want to go :( ')
+        elif gmap[hyc-1][hxc]=='T':
+            
+            print('You got stuck in the trap and got hurt')
+            health-=1
+            print(('Your remaining health is {}').format(health))
+            if health==0:
+                print('You died :(')
+                print('-->GAME OVER<--')
+                flag2=False
+            gmap[hyc-1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            m='T'
+            hyc-=1
+            print(m)
+        elif gmap[hyc-1][hxc]=='O':
+            print(('Your remaining health is {}').format(health))
+            gmap[hyc-1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            hyc-=1
+            m='O'
+        elif gmap[hyc-1][hxc]=='p':
+            print('You found the princes alive and desperately in need of help,You bravely tell her that see needn\'t worry anymore for the trouble is long gone and later you marry her and become the king of dreamland.')
+            print('END OF THE WORST ROMANCE GENRE STORY EVER,THANKS FOR PLAYING :D ')
+            flag2=False
+    elif movement=='s':
+        if gmap[hyc+1][hxc]=='W':
+            print('A gigantic wall blocks stands erect where you want to go :( ')
+        elif gmap[hyc+1][hxc]=='T':
+            
+            print('You got stuck in the trap and got hurt')
+            health-=1
+            print(('Your remaining health is {}').format(health))
+            if health==0:
+                print('You died :(')
+                print('-->GAME OVER<--')
+                flag2=False
+            gmap[hyc+1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            m='T'
+            hyc+=1
+            print(m)
+        elif gmap[hyc+1][hxc]=='O':
+            print(('Your remaining health is {}').format(health))
+            gmap[hyc+1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            hyc+=1
+            m='O'
+            
+        elif gmap[hyc+1][hxc]=='p':
+            print('You found the princes alive and desperately in need of help,You bravely tell her that see needn\'t worry anymore for the trouble is long gone and later you marry her and become the king of dreamland.')
+            print('END OF THE WORST ROMANCE GENRE STORY EVER,THANKS FOR PLAYING :D ')
+            flag2=False
+    elif movement=='a':
+        if gmap[hyc][hxc-1]=='W':
+            print('A gigantic wall blocks stands erect where you want to go :( ')
+        elif gmap[hyc][hxc-1]=='T':
+            
+            print('You got stuck in the trap and got hurt')
+            health-=1
+            print(('Your remaining health is {}').format(health))
+            if health==0:
+                print('You died :(')
+                print('-->GAME OVER<--')
+                flag2=False
+            gmap[hyc][hxc-1],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            m='T'
+            hxc-=1
+            print(m)
+        elif gmap[hyc][hxc-1]=='O':
+            print(('Your remaining health is {}').format(health))
+            gmap[hyc][hxc-1],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            hxc-=1
+            m='O'
+        elif gmap[hyc][hxc-1]=='p':
+            print('You found the princes alive and desperately in need of help,You bravely tell her that see needn\'t worry anymore for the trouble is long gone and later you marry her and become the king of dreamland.')
+            print('END OF THE WORST ROMANCE GENRE STORY EVER,THANKS FOR PLAYING :D ')
+            flag2=False
+    elif movement=='d':
+        if gmap[hyc][hxc+1]=='W':
+            print('A gigantic wall blocks stands erect where you want to go :( ')
+        elif gmap[hyc][hxc+1]=='T':
+            
+            print('You got stuck in the trap and got hurt')
+            health-=1
+            print(('Your remaining health is {}').format(health))
+            if health==0:
+                print('You died :(')
+                print('-->GAME OVER<--')
+                flag2=False
+            gmap[hyc][hxc+1],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            m='T'
+            hxc+=1
+            print(m)
+        elif gmap[hyc][hxc+1]=='O':
+            print(('Your remaining health is {}').format(health))
+            gmap[hyc][hxc+1],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            hxc+=1
+            m='O' 
+        elif gmap[hyc][hxc+1]=='p':
+            print('You found the princes alive and desperately in need of help,You bravely tell her that see needn\'t worry anymore for the trouble is long gone and later you marry her and become the king of dreamland.')
+            print('END OF THE WORST ROMANCE STORY EVER,THANKS FOR PLAYING :D ')
+            flag2=False
+    print(gmap)
