@@ -1,0 +1,29 @@
+#Movement
+for y in range(len(gmap)):
+    for x in range(len(gmap)):
+        if gmap[y][x]=='h':
+            hxc=x                                        #Hero X Coordinate
+            hyc=y                                        #Hero Y Coordinate
+print(hxc,hyc)
+flag2=True
+while flag2:
+    movement=input('Press \'W\' key to move up \'S\' key to move down \'A\' key to move left and \'D\' key to move right,and tap the enter key')
+    m='O'
+    if movement=='w':
+        if gmap[hyc-1][hxc]=='W':
+            print('A gigantic wall blocks stands erect where you want to go :( ')
+        elif gmap[hyc-1][hxc]=='T':
+            print('You got stuck in the trap and got hurt')
+            health-=1
+            print(('Your remaining health is {}').format(health))
+            gmap[hyc-1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+            hyc-=1
+        elif gmap[hyc-1][hxc]=='O':
+          print(('Your remaining health is {}').format(health))
+          gmap[hyc-1][hxc],gmap[hyc][hxc]=gmap[hyc][hxc],m
+          hyc-=1
+          m='O'
+
+
+    print(gmap)       
+#Let me know before you edit the code and do tell me about the changes you've made...Or you can just leave this the way it is,I'll code more later
