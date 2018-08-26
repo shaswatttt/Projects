@@ -1,0 +1,59 @@
+#First One
+m=[["O" for x in range(5)] for x in range(5)]
+a=m.copy()
+for x in range(5):
+  if x!=2:
+    a[2][x]="W"
+a[0][0]='p'
+a[4][4]='h'
+a[0][1]='W' 
+
+#Second One
+b=a.copy()
+b[0],b[1]=b[1],b[0]
+
+
+
+
+#Third One (This one's a bit different but the solution is pretty straightforward)
+c=[["O" for x in range(5)] for x in range(5)]
+for x in range(1,4):
+    c[1][x]='W'            
+    if x!=2:
+        c[2][x]='W'
+        c[3][x]='W'
+c[2][2]='p'
+c[3][2]='G'  #G is a gate,hero has to get the key first inorder to unloc kthe gate and rescue the princes
+
+c[0][2]='K'
+c[4][2]='p'
+
+#Fourth is a bit different too.
+d=[["O" for x in range(5)] for x in range(5)]
+d[0][1]='M'       #Monster
+for x in range(1,5):
+    d[1][x]='W'
+d[3][2]='W'    
+d[3][3]='S'       #Sword    
+d[4][2]='W'
+d[0][4]='p'
+d[4][0]='h'
+
+
+#Fifth one is a variation of the first one
+e=[["O" for x in range(5)] for x in range(5)]
+e[0][0]='p'
+for x in range(5):
+    if x!=4:
+        e[1][x]='L'        #Lave   Takes 3hp away    HP-->Health Points
+    if x!=0:                                                                                
+        e[3][x]='P'        #Poison? We'll figure out something better lol (Takes 1hp)away
+e[4][4]='h'
+
+
+
+our_initial_game_list=[a,b,c,d,e]
+for x in our_initial_game_list:
+    print(x)
+    for x in range(3):
+        print()
